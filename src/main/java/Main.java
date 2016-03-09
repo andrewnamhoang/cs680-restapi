@@ -5,12 +5,11 @@ public class Main {
 
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        get("/", (req, res) -> "This is a change 2");
+        get("/", (req, res) -> "This is a change");
         
         
     	get("/bookURL/:variable", (req, res) ->{
     		DBDemo app = new DBDemo();
-    		String request = null;
     		String myString = app.getABookPathAPI(req.params(":variable"));
     		return myString;
     	});
