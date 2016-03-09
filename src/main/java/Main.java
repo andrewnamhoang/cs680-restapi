@@ -5,7 +5,7 @@ public class Main {
 
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
-        get("/", (req, res) -> "This is a change");
+        get("/", (req, res) -> "This is a change 2");
         
         
     	get("/bookURL/:variable", (req, res) ->{
