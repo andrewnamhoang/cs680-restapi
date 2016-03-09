@@ -74,23 +74,6 @@ public class DBDemo {
 		    }
 		}
 		
-		//feed a book id and the connection and it returns the information for a particular book
-		public String getBookInfo(Connection conn, String bookid) throws SQLException {
-		    Statement stmt = null;
-		    try {
-		        stmt = conn.createStatement();
-		        String sql = "SELECT * FROM mydb2.books WHERE bookid ='"  + bookid + "'";
-		        ResultSet  rs = stmt.executeQuery(sql);
-		        String response = rStoJason(rs);
-		        rs.close();
-		        return response;
-		    } finally {
-
-		    	// This will run whether we throw an exception or not
-		        if (stmt != null) { stmt.close(); }
-		    }
-		}
-		
 		//Give it the connection and it returns a JSON string of the entire book table (all info)
 		public String getAllBooks(Connection conn) throws SQLException {
 		    Statement stmt = null;
@@ -98,9 +81,9 @@ public class DBDemo {
 		        stmt = conn.createStatement();
 		        String sql = "SELECT * FROM mydb2.books";
 		        ResultSet  rs = stmt.executeQuery(sql);
-		        //replace with gson
+		        //Rogelio: Use our own JSONizer here???
 		        String response = rStoJason(rs);
-		        //end replace with gson
+
 		        rs.close();
 		        return response;
 		    } finally {
@@ -108,53 +91,6 @@ public class DBDemo {
 		        if (stmt != null) { stmt.close(); }
 		    }
 		}
-		
-		public String getPath(Connection conn, String string) throws SQLException {
-		    Statement stmt = null;
-		    try {
-		    	String path = null;
-		        stmt = conn.createStatement();
-		        String sql = "SELECT * FROM mydb2.books WHERE bookid ='"  + string + "'";
-		        ResultSet  rs = stmt.executeQuery(sql);
-		        while(rs.next()){
-		            //Retrieve by column name
-		            path = rs.getString("path");
-		         }
-		        rs.close();
-		        return path;
-		    } finally {
-
-		    	// This will run whether we throw an exception or not
-		        if (stmt != null) { stmt.close(); }
-		    }
-		}
-		
-		//Used in development... doesn't really do anything useful
-		public boolean getResult(Connection conn, String command) throws SQLException {
-		    Statement stmt = null;
-		    try {
-		        stmt = conn.createStatement();
-		        ResultSet  rs = stmt.executeQuery(command);
-		        while(rs.next()){
-		            //Retrieve by column name
-		            int id  = rs.getInt("bookid");
-		            String title = rs.getString("title");
-		            String path = rs.getString("path");
-
-		            //Display values
-		            System.out.print("Book ID: " + id);
-		            System.out.print(", Title: " + title);
-		            System.out.println(", path: " + path);
-		         }
-		        rs.close();
-		        return true;
-		    } finally {
-
-		    	// This will run whether we throw an exception or not
-		        if (stmt != null) { stmt.close(); }
-		    }
-		}
-
 		
 		public String getListOfBooksAPI(){
 			//Connect to DB
@@ -177,86 +113,6 @@ public class DBDemo {
 				return "Returned - Error Could Not Get List Of Books";
 			}
 		}
-	
-		public String getABookAPI(String bookrequest){
-			//Connect to DB
-			Connection conn = null;
-			try {
-				conn = this.getConnection();
-				System.out.println("Connected to database");
-			} catch (SQLException e) {
-				System.out.println("ERROR: Could not connect to the database");
-				e.printStackTrace();
-				return "Error Could Not Connect to the DB";
-			}
-			//Get list of books
-			try { 			
-				String bookinfo = getBookInfo(conn, bookrequest);
-				return(bookinfo);	
-		    } catch (SQLException e) {
-				System.out.println("System Out - ERROR: Could not get Info of a book");
-				e.printStackTrace();
-				return "Returned - ERROR: Could not get Info of a book";
-			}
-		}
-		
-		public ResultSet getResultSetAPI(){
-			//Connect to DB
-			Connection conn = null;
-			try {
-				conn = this.getConnection();
-				System.out.println("Connected to database");
-			} catch (SQLException e) {
-				System.out.println("ERROR: Could not connect to the database");
-				e.printStackTrace();
-				return null;
-			}
-			//Get list of books
-			try { 			
-				ResultSet booklist = getAllBooksRS(conn);
-				return booklist;	
-		    } catch (SQLException e) {
-				System.out.println("System Out - ERROR: Could not get List of Books");
-				e.printStackTrace();
-				return null;
-			}
-		}
-		
-		public String getABookPathAPI(String bookrequest){
-			//Connect to DB
-			Connection conn = null;
-			try {
-				conn = this.getConnection();
-				System.out.println("Connected to database");
-			} catch (SQLException e) {
-				System.out.println("ERROR: Could not connect to the database");
-				e.printStackTrace();
-				return "Error Could Not Connect to the DB";
-			}
-			//Get list of books
-			try { 			
-				String bookinfo = getPath(conn, bookrequest);
-				return(bookinfo);	
-		    } catch (SQLException e) {
-				System.out.println("System Out - ERROR: Could not get a path");
-				e.printStackTrace();
-				return "Returned - Error Could Not Get a path";
-			}
-		}
-		
-		public ResultSet getAllBooksRS(Connection conn) throws SQLException {
-		    Statement stmt = null;
-		    try {
-		        stmt = conn.createStatement();
-		        String sql = "SELECT * FROM mydb2.books";
-		        ResultSet  rs = stmt.executeQuery(sql);
-		        //replace with gson
-		        //end replace with gson
-		        return rs;
-		    } finally {
-		    	// This will run whether we throw an exception or not
-		        if (stmt != null) { stmt.close(); }
-		    }
-		}
-		
 }
+
+
