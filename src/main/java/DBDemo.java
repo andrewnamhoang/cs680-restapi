@@ -252,7 +252,6 @@ public class DBDemo {
 		        ResultSet  rs = stmt.executeQuery(sql);
 		        //replace with gson
 		        //end replace with gson
-		        rs.close();
 		        return rs;
 		    } finally {
 		    	// This will run whether we throw an exception or not
