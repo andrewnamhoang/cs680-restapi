@@ -3,8 +3,6 @@
 
 import java.sql.*;
 import java.util.Properties;
-import java.net.URI;
-import java.net.URISyntaxException;
 	
 public class DBDemo {
 		/** The name of the MySQL account to use (or empty for anonymous) */
@@ -156,38 +154,7 @@ public class DBDemo {
 		        if (stmt != null) { stmt.close(); }
 		    }
 		}
-		/**
-		 * Connect to MySQL and do some stuff.
-		 * @return 
-		 */
-		public String run() {
 
-			// Connect to MySQL
-			Connection conn = null;
-			try {
-				conn = this.getConnection();
-				System.out.println("Connected to database");
-			} catch (SQLException e) {
-				System.out.println("ERROR: Could not connect to the database");
-				e.printStackTrace();
-				return "Error Could Not Connect to the DB";
-			}
-
-			// Try two queries
-			try { 
-			    String getMeThisBook= "1";
-				String newString = this.getBookInfo(conn, getMeThisBook);
-				System.out.println("This is a book path:  " + newString);
-				//Statement stmt = null;			
-				String booklist = getAllBooks(conn);
-				return(booklist);			
-		    } catch (SQLException e) {
-				System.out.println("ERROR: Could not get result");
-				e.printStackTrace();
-				return "Error Could Not Get Resutl";
-			}
-			
-		}
 		
 		public String getListOfBooksAPI(){
 			//Connect to DB
@@ -233,7 +200,29 @@ public class DBDemo {
 			}
 		}
 		
-		public String getABookPathAPI(String string){
+		public ResultSet getResultSetAPI(){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not connect to the database");
+				e.printStackTrace();
+				return null;
+			}
+			//Get list of books
+			try { 			
+				ResultSet booklist = getAllBooksRS(conn);
+				return booklist;	
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not get List of Books");
+				e.printStackTrace();
+				return null;
+			}
+		}
+		
+		public String getABookPathAPI(String bookrequest){
 			//Connect to DB
 			Connection conn = null;
 			try {
@@ -246,7 +235,7 @@ public class DBDemo {
 			}
 			//Get list of books
 			try { 			
-				String bookinfo = getPath(conn, string);
+				String bookinfo = getPath(conn, bookrequest);
 				return(bookinfo);	
 		    } catch (SQLException e) {
 				System.out.println("System Out - ERROR: Could not get a path");
@@ -255,5 +244,20 @@ public class DBDemo {
 			}
 		}
 		
+		public ResultSet getAllBooksRS(Connection conn) throws SQLException {
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "SELECT * FROM mydb2.books";
+		        ResultSet  rs = stmt.executeQuery(sql);
+		        //replace with gson
+		        //end replace with gson
+		        rs.close();
+		        return rs;
+		    } finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
+		}
 		
 }
