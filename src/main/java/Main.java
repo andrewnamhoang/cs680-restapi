@@ -1,9 +1,9 @@
-//cs680-restapi 
+///cs680-restapi 
 
 import static spark.Spark.*;
 
 public class Main {
-	//testing local repo
+	
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
         get("/", (req, res) -> "Next page has successfully been created");
