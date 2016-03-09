@@ -57,9 +57,8 @@ public class Main {
     	get("/resultset",(req,res)->{
     		DBDemo app = new DBDemo();
     		ResultSet mySet = app.getResultSetAPI();
-    		String myString;
-    		myString = rStoJason(mySet);
-    		return myString;
+    		//String myString = rStoJason(mySet);
+    		return mySet;
     	});
     	
 
