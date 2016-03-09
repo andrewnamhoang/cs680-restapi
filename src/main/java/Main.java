@@ -57,13 +57,13 @@ public class Main {
     	get("/resultset",(req,res)->{
     		DBDemo app = new DBDemo();
     		ResultSet rs = app.getResultSetAPI();
-    		String path= null;
+    		/*String path= null;
 	        while(rs.next()){
 	            //Retrieve by column name
 	            path = rs.getString("path");
-	         }
+	         }*/
     		//String myString = rStoJason(mySet);
-    		return path;
+    		return rs;
     	});
     	
 
