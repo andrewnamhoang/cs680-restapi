@@ -14,6 +14,11 @@ public class Main {
     		return myString;
     	});
     	
+    	get("/purchasedBooks/:userid",(req,res)->{// returns list of purchased books
+    		DBDemo app = new DBDemo();
+    		String myString = app.getListOfPurchasedBooksAPI(req.params(":userid"));
+    		return myString;
+    	});
     	
     }
 

@@ -113,6 +113,44 @@ public class DBDemo {
 				return "Returned - Error Could Not Get List Of Books";
 			}
 		}
+		
+		public String getListOfPurchasedBooksAPI(String userid){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not connect to the database");
+				e.printStackTrace();
+				return "Error Could Not Connect to the DB";
+			}
+			//Return purchased books
+			try { 			
+				String booklist = getPurchasedBooks(userid, conn);
+				return(booklist);	
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not get List of  Purchased Books");
+				e.printStackTrace();
+				return "Returned - Error Could Not Get List Of Purchased Books";
+			}
+		}
+
+		public String getPurchasedBooks(String userid, Connection conn) throws SQLException {
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "SELECT * FROM mydb2.purchases WHERE userpurchased ='" +userid + "'";
+		        ResultSet  rs = stmt.executeQuery(sql);
+		        String response = rStoJason(rs);
+
+		        rs.close();
+		        return response;
+		    } finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
+		}
 }
 
 
