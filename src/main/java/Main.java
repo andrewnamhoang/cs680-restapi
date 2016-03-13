@@ -20,6 +20,18 @@ public class Main {
     		return myString;
     	});
     	
+    	get("/buyABook/:userid/:bookid",(req,res)->{
+    		DBDemo app = new DBDemo();
+    		String myString = app.registerBookPurchaseAPI(req.params(":userid"), req.params(":bookid"));
+    		return myString;
+    	});
+    	
+    	post("/buyABookpost",(req,res)->{
+    		DBDemo app = new DBDemo();
+    		String myString = app.registerBookPurchaseAPI(req.queryParams("userid"), req.queryParams("bookid"));
+    		return myString;
+    	});
+    	
     }
 
     static int getHerokuAssignedPort() {//gets a port for Heroku

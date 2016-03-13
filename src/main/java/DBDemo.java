@@ -151,6 +151,51 @@ public class DBDemo {
 		        if (stmt != null) { stmt.close(); }
 		    }
 		}
+
+		public int registerBookPurchase(String userid, String bookid, Connection conn) throws SQLException{
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "INSERT INTO `mydb2`.`purchases` (`bookpurchased`, `userpurchased`) VALUES ('"+bookid+"', '"+userid+"');";
+		        int rs = stmt.executeUpdate(sql);
+		        return 1;
+		    }catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not push purchase SQL table");
+				e.printStackTrace();
+				return 0;
+			} finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
+		}
+		
+		public String registerBookPurchaseAPI(String userid, String bookid){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not connect to the database");
+				e.printStackTrace();
+				return "Error Could Not Connect to the DB";
+			}
+			try { 			
+				int response = registerBookPurchase(userid, bookid, conn);
+				if(response ==1){
+					return "Success! Purchase was pushed";
+				}else{
+				return "Somethign Broke :(";
+				}
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not get List of Purchased Books");
+				e.printStackTrace();
+				return "Returned - Error Could Not Get List Of Purchased Books";
+			}
+			
+		
+		}
+		
 }
 
 
