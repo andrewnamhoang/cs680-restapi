@@ -140,7 +140,7 @@ public class DBDemo {
 		    Statement stmt = null;
 		    try {
 		        stmt = conn.createStatement();
-		        String sql = "SELECT * FROM mydb2.purchases WHERE userpurchased ='" +userid + "'";
+		        String sql = "SELECT * FROM mydb2.purchases WHERE userpurchased ='" +userid+ "'";
 		        ResultSet  rs = stmt.executeQuery(sql);
 		        String response = rStoJason(rs);
 
@@ -152,6 +152,7 @@ public class DBDemo {
 		    }
 		}
 
+		//Queries to buy a book
 		public int registerBookPurchase(String userid, String bookid, Connection conn) throws SQLException{
 		    Statement stmt = null;
 		    try {
@@ -192,8 +193,70 @@ public class DBDemo {
 				e.printStackTrace();
 				return "Returned - Error Could Not Get List Of Purchased Books";
 			}
-			
+		}
 		
+		//Queries to create a new user
+		public String registerUserAPI(String username, String password, String firstname, String lastname, String email){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not register user - No Connectino to DB");
+				e.printStackTrace();
+				return "Error Could Not Connect to the DB";
+			}
+			try { 			
+				int response = registerNewUser(username, firstname, lastname, password, email, conn);
+				if(response==1){
+					String useridresponse = getUserId(username, conn);
+					//String someString =  "[{userid:"+ useridresponse +"}]"; 
+					return useridresponse;
+				}else{
+				return "User Name Invalid. Try another user name.";
+				}
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not register user");
+				e.printStackTrace();
+				return "Returned - Error Could Not register user";
+			}
+		}
+		
+		public int registerNewUser(String username, String firstname, String lastname, String password, String email, Connection conn) throws SQLException{
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "INSERT INTO `mydb2`.`user` (`fname`, `lname`, `uname`,`password`,`email`) VALUES ('"+firstname+"', '"+lastname+"','"+username+"','"+password+"','"+email+"');";
+		        int rs = stmt.executeUpdate(sql);
+		        return 1;
+		    }catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not create new user");
+				e.printStackTrace();
+				return 0;
+			} finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
+		}
+
+		public String getUserId(String username, Connection conn) throws SQLException{
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "SELECT userid FROM mydb2.user WHERE uname ='" +username+ "'";
+		        ResultSet  rs = stmt.executeQuery(sql);
+		        String response = rStoJason(rs);
+		        rs.close();
+		        return response;
+		    }catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not create new user");
+				e.printStackTrace();
+				return "Failed Select User ID";
+			} finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
 		}
 		
 }

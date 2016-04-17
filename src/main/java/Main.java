@@ -32,6 +32,28 @@ public class Main {
     		return myString;
     	});
     	
+    	
+    	//registerUserAPI(String username, String password, String firstname, String lastname, String email)
+    	
+    	post("/newUser",(req,res)->{
+    		DBDemo app = new DBDemo();
+    		String myString = app.registerUserAPI(req.queryParams("username"), req.queryParams("password"), req.queryParams("firstname"), req.queryParams("lastname"),req.queryParams("email"));
+    		return myString;
+    	});
+    	
+    	post("/authUser",(req,res)->{
+    		DBDemo app = new DBDemo();
+    		String myString = app.registerBookPurchaseAPI(req.queryParams("userid"), req.queryParams("bookid"));
+    		return myString;
+    	});
+    	
+    	post("/updateUser",(req,res)->{
+    		DBDemo app = new DBDemo();
+    		String myString = app.registerBookPurchaseAPI(req.queryParams("userid"), req.queryParams("bookid"));
+    		return myString;
+    	});
+    	
+    	
     }
 
     static int getHerokuAssignedPort() {//gets a port for Heroku
