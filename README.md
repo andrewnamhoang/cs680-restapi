@@ -88,7 +88,7 @@ To register a new user send a POST request to
 http://cs680-restapi.herokuapp.com/newUser
 ````
 
-The body of the request will contain five parameters:  
+The body of the response will contain five parameters:  
 username  
 password  
 firstname  
