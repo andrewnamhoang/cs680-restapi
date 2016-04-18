@@ -46,7 +46,7 @@ The format of the response string is:
  
 To retrieve information on all books that a certain user has downloaded send a GET request to
 ````
-http://cs680-restapi.herokuapp.com/purchasedBooks/:userid
+http://cs680-restapi.herokuapp.com/purchasedBooks/userid
 ````
 This will return an array of purchased book JSON objects 
 Fields retrieved for each book are: 
