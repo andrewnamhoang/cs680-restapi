@@ -112,7 +112,7 @@ http://cs680-restapi.herokuapp.com/authUser
 ````
 
 The body of the request will contain five parameters:  
-username
+username  
 password
 
 A successful authentication will return the appropriate user ID number in JSON:
