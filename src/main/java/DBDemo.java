@@ -152,7 +152,7 @@ public class DBDemo {
 		    }
 		}
 
-		//Queries to buy a book
+		//Methods to buy a book
 		public int registerBookPurchase(String userid, String bookid, Connection conn) throws SQLException{
 		    Statement stmt = null;
 		    try {
@@ -195,7 +195,7 @@ public class DBDemo {
 			}
 		}
 		
-		//Queries to create a new user
+		//Method to create a new user
 		public String registerUserAPI(String username, String password, String firstname, String lastname, String email){
 			//Connect to DB
 			Connection conn = null;
@@ -214,7 +214,7 @@ public class DBDemo {
 					//String someString =  "[{userid:"+ useridresponse +"}]"; 
 					return useridresponse;
 				}else{
-				return "User Name Invalid. Try another user name.";
+				return "-1";
 				}
 		    } catch (SQLException e) {
 				System.out.println("System Out - ERROR: Could not register user");
@@ -258,6 +258,53 @@ public class DBDemo {
 		        if (stmt != null) { stmt.close(); }
 		    }
 		}
+
+		//Methods to authenticate user
+		public String authUserAPI(String username, String password){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not register user - No Connectino to DB");
+				e.printStackTrace();
+				return "Error Could Not Connect to the DB";
+			}
+			try { 			
+				String response = authUser(username, password, conn);
+				return response;
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not register user");
+				e.printStackTrace();
+				return "Returned - Error Could Not register user";
+			}
+		}
+		
+		public String authUser(String username, String password, Connection conn) throws SQLException{
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "SELECT userid FROM mydb2.user WHERE uname ='"+username+"' AND password='"+password+"'";
+		        ResultSet  rs = stmt.executeQuery(sql);
+		        if (!rs.next() ) {
+		            return "-1";
+		        }
+		        String response = rStoJason(rs);
+		        rs.close();
+		        return response;
+		    }catch (SQLException e) {
+				System.out.println("System Out - Cannot verify identity");
+				e.printStackTrace();
+				return "-1";
+			} finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
+		}
+
+		
+		
 		
 }
 

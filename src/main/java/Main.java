@@ -38,12 +38,20 @@ public class Main {
     	post("/newUser",(req,res)->{
     		DBDemo app = new DBDemo();
     		String myString = app.registerUserAPI(req.queryParams("username"), req.queryParams("password"), req.queryParams("firstname"), req.queryParams("lastname"),req.queryParams("email"));
+    		if(myString.equals("-1")){
+    			res.status(401);
+    			return "Status 401";
+    		}
     		return myString;
     	});
     	
     	post("/authUser",(req,res)->{
     		DBDemo app = new DBDemo();
-    		String myString = app.registerBookPurchaseAPI(req.queryParams("userid"), req.queryParams("bookid"));
+    		String myString = app.authUserAPI(req.queryParams("username"), req.queryParams("password"));
+    		if(myString.equals("-1")){
+    			res.status(401);
+    			return "Status 401";
+    		}
     		return myString;
     	});
     	
