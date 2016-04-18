@@ -88,14 +88,14 @@ To register a new user send a POST request to
 http://cs680-restapi.herokuapp.com/newUser
 ````
 
-The body of the response will contain five parameters:  
+The body of the request will contain five parameters:  
 username  
 password  
 firstname  
 lastname  
 email
 
-A successful registration will make the API respond the new users ID number in JSON:
+A successful registration will return the new users ID number in JSON:
 
 ````
 [
@@ -104,3 +104,24 @@ A successful registration will make the API respond the new users ID number in J
   }
 ]
 ````
+**Authenticate User**
+
+To authenticate a user send a post request to:
+````
+http://cs680-restapi.herokuapp.com/authUser
+````
+
+The body of the request will contain five parameters:  
+username
+password
+
+A successful authentication will return the appropriate user ID number in JSON:
+````
+[
+  {
+    "userid":"17"
+  }
+]
+````
+
+Use this ID number to interface with other APIs.
