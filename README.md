@@ -80,7 +80,7 @@ The body of the request will contain two parameters:
 userid  
 bookid  
 
-
+#Users
 **Register a new user**
 
 To register a new user send a POST request to
