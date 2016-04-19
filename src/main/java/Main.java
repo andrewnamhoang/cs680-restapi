@@ -62,7 +62,15 @@ public class Main {
     		return "";
     	});
     	
-    	
+    	post("/myRecordings",(req,res)->{//returns recordingid
+    		DBDemo app = new DBDemo();
+    		String myString = app.getMyRecordingsAPI(req.queryParams("userid"));
+    		if(myString.equals("-1")){
+    			res.status(401);
+    			return "Status 401";
+    		}
+    		return myString;
+    	});
     }
 
     static int getHerokuAssignedPort() {//gets a port for Heroku

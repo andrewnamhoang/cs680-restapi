@@ -17,6 +17,37 @@ public class DBDemo {
 		private final String dbName = "mydb2";
 
 		//Code from git to JSONINZE a Result
+		public  String singlerStoJason(ResultSet rs) throws SQLException 
+		{
+		  if(rs.first() == false) {return "[]";} else {rs.beforeFirst();} // empty rs
+		  StringBuilder sb=new StringBuilder();
+		  Object item; String value;
+		  java.sql.ResultSetMetaData rsmd = rs.getMetaData();
+		  int numColumns = rsmd.getColumnCount();
+
+		  sb.append("{");
+		  while (rs.next()) {
+
+		    for (int i = 1; i < numColumns + 1; i++) {
+		        String column_name = rsmd.getColumnName(i);
+		        item=rs.getObject(i);
+		        if (item !=null )
+		           {value = item.toString(); value=value.replace('"', '\'');}
+		        else 
+		           {value = "null";}
+		        sb.append("\"" + column_name+ "\":\"" + value +"\",");
+
+		    }                                   //end For = end record
+
+		    sb.setCharAt(sb.length()-1, '}');   //replace last comma with curly bracket
+		    sb.append(",{");
+		 }                                      // end While = end resultset
+
+		 sb.delete(sb.length()-3, sb.length()); //delete last two chars
+		 sb.append("}");
+
+		 return sb.toString();
+		}
 		public  String rStoJason(ResultSet rs) throws SQLException 
 		{
 		  if(rs.first() == false) {return "[]";} else {rs.beforeFirst();} // empty rs
@@ -246,7 +277,7 @@ public class DBDemo {
 		        stmt = conn.createStatement();
 		        String sql = "SELECT userid FROM mydb2.user WHERE uname ='" +username+ "'";
 		        ResultSet  rs = stmt.executeQuery(sql);
-		        String response = rStoJason(rs);
+		        String response = singlerStoJason(rs);
 		        rs.close();
 		        return response;
 		    }catch (SQLException e) {
@@ -290,7 +321,7 @@ public class DBDemo {
 		        if (!rs.next() ) {
 		            return "-1";
 		        }
-		        String response = rStoJason(rs);
+		        String response = singlerStoJason(rs);
 		        rs.close();
 		        return response;
 		    }catch (SQLException e) {
@@ -341,6 +372,46 @@ public class DBDemo {
 				e.printStackTrace();
 				} }
 		   		}
+		}
+		
+		public String getMyRecordingsAPI(String userid){
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not connect to the database");
+				e.printStackTrace();
+				return "Error Could Not Connect to the DB";
+			}
+			//Return the recordings books
+			try { 			
+				String booklist = getMyRecordings(userid, conn);
+				return(booklist);	
+		    } catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not get List of  Purchased Books");
+				e.printStackTrace();
+				return "Returned - Error Could Not Get List Of Purchased Books";
+			}
+		}
+		
+		public String getMyRecordings(String userid, Connection conn) throws SQLException {
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "SELECT * FROM mydb2.recording WHERE owner ='" +userid+ "'";
+		        ResultSet  rs = stmt.executeQuery(sql);
+		        if (!rs.next() ) {
+		            return "-1";
+		        }
+		        String response = rStoJason(rs);
+		        rs.close();
+		        return response;
+		    } finally {
+		    	// This will run whether we throw an exception or not
+		        if (stmt != null) { stmt.close(); }
+		    }
 		}
 		
 }
