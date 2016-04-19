@@ -144,7 +144,7 @@ A successful authentitcation will respond with with http 200. Users of the API a
 **Get list of recordings**  
 To get a list of a users recordings send a post request to:
 ````
-http://cs680-restapi.herokuapp.com/newRecording
+http://cs680-restapi.herokuapp.com/myRecordings
 ````
 The body of the request needs to contain the following parameter:  
 userid
