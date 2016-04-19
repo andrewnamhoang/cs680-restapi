@@ -149,7 +149,7 @@ http://cs680-restapi.herokuapp.com/myRecordings
 The body of the request needs to contain the following parameter:  
 userid
 
-The response will include the following fields:
+The response will include the following fields:  
 recordingid: INT(11)
 owner: INT(11)
 bookassoc: INT(11)
