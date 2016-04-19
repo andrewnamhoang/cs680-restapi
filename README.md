@@ -125,3 +125,22 @@ A successful authentication will return the appropriate user ID number in JSON:
 ````
 
 Use this ID number to interface with other APIs.
+
+#Recordings
+**Associate File Path**
+To register a user recorded video on the database send a post request to:
+````
+http://cs680-restapi.herokuapp.com/newRecording
+````
+The body of the request will contain the following parameters:  
+userid
+bookid
+name
+type
+path
+
+A successful authentitcation will respond with with http 200. Users of the API are expected to get a list of recordings to show the updated records.
+
+**Get list of recordings**
+
+TO BE COMPLETED
