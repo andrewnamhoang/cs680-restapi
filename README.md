@@ -141,6 +141,37 @@ path
 
 A successful authentitcation will respond with with http 200. Users of the API are expected to get a list of recordings to show the updated records.
 
-**Get list of recordings**
+**Get list of recordings**  
+To get a list of a users recordings send a post request to:
+````
+http://cs680-restapi.herokuapp.com/newRecording
+````
+The body of the request needs to contain the following parameter:  
+userid
 
-TO BE COMPLETED
+The response will include the following fields:
+recordingid: INT(11)
+owner: INT(11)
+bookassoc: INT(11)
+name: VARCHAR(45)
+type: INT(11)
+path: INT(99)
+sharedwith: INT(11)
+
+The API will respond JSON string with the following format:
+````
+[
+  {
+    "recordingid":"4",
+    "owner":"1",
+    "bookassoc":"1",
+    "name":"1st New Recording",
+    "type":"Video",
+    "path":"www.fakepath.com",
+    "sharedwith":"null"
+  },
+  ...
+]
+````
+
+Sharedwith is currently not implemented.
