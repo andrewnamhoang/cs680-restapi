@@ -149,14 +149,14 @@ http://cs680-restapi.herokuapp.com/myRecordings
 The body of the request needs to contain the following parameter:  
 userid
 
-The response will include the following fields:  
-recordingid: INT(11)
-owner: INT(11)
-bookassoc: INT(11)
-name: VARCHAR(45)
-type: INT(11)
-path: INT(99)
-sharedwith: INT(11)
+The response will include the following fields:   
+recordingid: INT(11)  
+owner: INT(11)  
+bookassoc: INT(11)  
+name: VARCHAR(45)  
+type: INT(11)  
+path: INT(99)  
+sharedwith: INT(11)  
 
 The API will respond JSON string with the following format:
 ````
