@@ -154,9 +154,9 @@ recordingid: INT(11)
 owner: INT(11)  
 bookassoc: INT(11)  
 name: VARCHAR(45)  
-type: INT(11)  
-path: INT(99)  
-sharedwith: INT(11)  
+type: VARCHAR(45)  
+path: VARCHAR(99)  
+sharedwith: VARCHAR(11)  
 
 The API will respond JSON string with the following format:
 ````
