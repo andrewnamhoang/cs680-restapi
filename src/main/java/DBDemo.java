@@ -302,9 +302,46 @@ public class DBDemo {
 		        if (stmt != null) { stmt.close(); }
 		    }
 		}
-
 		
 		
+		
+		public int newRecordingAPI(String userid, String bookid, String name, String type, String path) throws SQLException{
+			//Connect to DB
+			Connection conn = null;
+			try {
+				conn = this.getConnection();
+				System.out.println("Connected to database");
+			} catch (SQLException e) {
+				System.out.println("ERROR: Could not insert recording data into DB - no connection");
+				e.printStackTrace();
+				return -1;
+			}
+			int response = newRecording(userid, bookid, name, type, path, conn);
+			return response;
+		}
+		
+		
+		public int newRecording(String userid, String bookid, String name, String type, String path, Connection conn){
+		    Statement stmt = null;
+		    try {
+		        stmt = conn.createStatement();
+		        String sql = "INSERT INTO `mydb2`.`recording` (`owner`, `bookassoc`, `name`,`type`,`path`) VALUES ('"+userid+"', '"+bookid+"','"+name+"','"+type+"','"+path+"');";
+		        int response = stmt.executeUpdate(sql);
+		        return response;
+		    }catch (SQLException e) {
+				System.out.println("System Out - ERROR: Could not add path to DB");
+				e.printStackTrace();
+				return -1;
+			} finally {
+		    	// This will run whether we throw an exception or not
+				if (stmt != null) { try {
+						stmt.close();
+				} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				} }
+		   		}
+		}
 		
 }
 

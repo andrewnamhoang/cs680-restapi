@@ -32,10 +32,7 @@ public class Main {
     		return myString;
     	});
     	
-    	
-    	//registerUserAPI(String username, String password, String firstname, String lastname, String email)
-    	
-    	post("/newUser",(req,res)->{
+    	post("/newUser",(req,res)->{//returns userid
     		DBDemo app = new DBDemo();
     		String myString = app.registerUserAPI(req.queryParams("username"), req.queryParams("password"), req.queryParams("firstname"), req.queryParams("lastname"),req.queryParams("email"));
     		if(myString.equals("-1")){
@@ -45,7 +42,7 @@ public class Main {
     		return myString;
     	});
     	
-    	post("/authUser",(req,res)->{
+    	post("/authUser",(req,res)->{//returns userid
     		DBDemo app = new DBDemo();
     		String myString = app.authUserAPI(req.queryParams("username"), req.queryParams("password"));
     		if(myString.equals("-1")){
@@ -55,10 +52,14 @@ public class Main {
     		return myString;
     	});
     	
-    	post("/updateUser",(req,res)->{
+    	post("/newRecording",(req,res)->{//returns recordingid
     		DBDemo app = new DBDemo();
-    		String myString = app.registerBookPurchaseAPI(req.queryParams("userid"), req.queryParams("bookid"));
-    		return myString;
+    		int myInt = app.newRecordingAPI(req.queryParams("userid"), req.queryParams("bookid"),req.queryParams("name"),req.queryParams("type"),req.queryParams("path"));
+    		if(myInt == -1 ){
+    			res.status(401);
+    			return "Status 401";
+    		}
+    		return "";
     	});
     	
     	
