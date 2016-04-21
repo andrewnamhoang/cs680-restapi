@@ -39,6 +39,7 @@ public class Main {
     			res.status(401);
     			return "Status 401";
     		}
+    		res.body(myString);
     		return myString;
     	});
     	
