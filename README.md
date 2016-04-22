@@ -98,11 +98,9 @@ email
 A successful registration will return the new users ID number in JSON:
 
 ````
-[
-  {
-    "userid":"17"
-  }
-]
+{
+  "userid":"17"
+}
 ````
 **Authenticate User**
 
@@ -117,11 +115,9 @@ password
 
 A successful authentication will return the appropriate user ID number in JSON:
 ````
-[
-  {
+{
     "userid":"17"
-  }
-]
+}
 ````
 
 Use this ID number to interface with other APIs.
