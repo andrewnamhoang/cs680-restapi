@@ -2,6 +2,17 @@
 
 Root URL for the API is http://cs680-restapi.herokuapp.com/
 
+#List of API Calls
+|API Calls|Use Description|
+|---------|---------------|
+|/availableBooks| GET request for available books|
+|/purchasedBooks/userid| GET request for purchased books|
+|/buyABookpost| POST request to purchase books|
+|/authUser| POST request to authentitcate a user|
+|/newUser| POST request to register a new user|
+|/myRecordings| POST request to get a list of recordings|
+|/newRecordings| POST request to register a new recording|
+
 #Books
 
 **Fetch all books available for download**
