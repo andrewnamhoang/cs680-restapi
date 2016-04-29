@@ -2,7 +2,7 @@
 
 Root URL for the API is http://cs680-restapi.herokuapp.com/
 
-#List of API Calls
+##List of API Calls
 |API Calls|Use Description|
 |---------|---------------|
 |/availableBooks| GET request for available books|
